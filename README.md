@@ -13,6 +13,7 @@ python --version
 python dashboard/scripts/pipeline.py --input data/raw/meta/2026-01-01_2026-09-29_ads_daily.csv --since 2026-01-01 --until 2026-09-29 --mode complete
 python dashboard/scripts/validate.py
 python -m unittest discover -s dashboard/scripts -p 'test_*.py' -v
+node dashboard/scripts/test_app.cjs
 python -m http.server 8765 --directory dashboard/public
 ```
 

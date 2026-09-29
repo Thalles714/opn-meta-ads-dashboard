@@ -11,8 +11,8 @@ function number(v){return v===null?'—':nf.format(v)}
 function currency(v){return v===null?'—':money.format(v/100)}
 function metricValue(v,key){return key==='spend'?currency(v):number(v)}
 function addOption(select,value,label){const opt=document.createElement('option');opt.value=value;opt.textContent=label;select.append(opt)}
-function getFiltered(){const from=$('from').value,to=$('to').value,c=$('campaign').value,s=$('adset').value,a=$('ad').value,t=$('type').value;
-  return state.data.rows.filter(r=>r.d>=from&&r.d<=to&&(!c||r.c===c)&&(!s||r.s===s)&&(!a||r.a===a)&&(!t||r.t===t))}
+function filterRows(rows,{from,to,c='',s='',a='',t=''}){return rows.filter(r=>r.d>=from&&r.d<=to&&(!c||r.c===c)&&(!s||r.s===s)&&(!a||r.a===a)&&(!t||r.t===t))}
+function getFiltered(){return filterRows(state.data.rows,{from:$('from').value,to:$('to').value,c:$('campaign').value,s:$('adset').value,a:$('ad').value,t:$('type').value})}
 function options(id,values,current,label){const el=$(id);el.replaceChildren();addOption(el,'',label);for(const v of values)addOption(el,v,v);if(values.includes(current))el.value=current;else el.value=''}
 function refreshDependencies(){const c=$('campaign').value,s=$('adset').value;const inDates=state.data.rows.filter(r=>r.d>=$('from').value&&r.d<=$('to').value&&(!$('type').value||r.t===$('type').value));
   const cs=[...new Set(inDates.map(r=>r.c))].sort();options('campaign',cs,c,'Todas as campanhas');
@@ -49,4 +49,5 @@ async function main(){try{const response=await fetch('data.json',{cache:'no-stor
   $('reset').addEventListener('click',()=>{for(const id of ['type','campaign','adset','ad'])$(id).value='';$('preset').value='all';$('error').hidden=true;setPreset('all')});
   document.querySelectorAll('[data-sort]').forEach(b=>b.addEventListener('click',()=>{const k=b.dataset.sort;state.desc=state.sort===k?!state.desc:true;state.sort=k;renderTable(state.rows)}));
 }catch(error){$('error').hidden=false;$('error').textContent='Não foi possível carregar os dados validados. Verifique o arquivo data.json e tente novamente. '+error.message}}
-main();
+if(typeof document!=='undefined')main();
+if(typeof module!=='undefined')module.exports={total,ratio,filterRows,groupRows};
