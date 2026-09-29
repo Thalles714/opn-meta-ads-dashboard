@@ -4,6 +4,12 @@ Painel estático em português para o export histórico por anúncio/dia de 01/0
 
 Painel publicado: https://opn-meta-ads-dashboard.vercel.app/ · repositório: https://github.com/Thalles714/opn-meta-ads-dashboard . Provedor escolhido: Vercel Hobby. A ligação Git da Vercel foi removida após a implantação inicial; pushes futuros não publicam automaticamente.
 
+## Interface
+
+O painel oferece temas claro e escuro pelo botão no cabeçalho; a escolha é guardada apenas no navegador. A tipografia usa DM Sans para a interface e IBM Plex Sans com algarismos tabulares para valores. O gráfico mostra investimento e eventos por mês ou dia, com tabela de valores acessível abaixo. Campos ausentes aparecem como `—` e interrompem a linha do gráfico; não são convertidos em zero. Animações de entrada e interação respeitam a preferência de movimento reduzido do sistema.
+
+A direção visual parte da identidade OPN em `assets/design_system.html`, da exploração dos componentes locais em `C:\Users\Administrator\Projects\tale\assets\templates\design-systems` e de referências de organização da informação da mLabs e OnlyGenius. Nenhum número demonstrativo dessas referências integra os dados do painel.
+
 ## Atualização manual (PowerShell)
 
 Na raiz privada do projeto:
