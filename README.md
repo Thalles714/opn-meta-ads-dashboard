@@ -2,6 +2,8 @@
 
 Painel estático em português para o export histórico por anúncio/dia de 01/01 a 29/09/2026. O dataset público usa códigos estáveis derivados de IDs e não contém nomes originais, IDs brutos ou arquivos privados.
 
+Painel publicado: https://opn-meta-ads-dashboard.vercel.app/ · repositório: https://github.com/Thalles714/opn-meta-ads-dashboard . Provedor escolhido: Vercel Hobby. A ligação Git da Vercel foi removida após a implantação inicial; pushes futuros não publicam automaticamente.
+
 ## Atualização manual (PowerShell)
 
 Na raiz privada do projeto:
@@ -25,13 +27,16 @@ Depois dos testes e da conferência dos totais:
 ```powershell
 python dashboard/scripts/prepare_publication.py
 git -C dashboard/publication-repo status --short
-git -C dashboard/publication-repo add README.md index.html styles.css app.js data.json scripts
+git -C dashboard/publication-repo add .gitignore README.md index.html styles.css app.js data.json dashboard/scripts
 git -C dashboard/publication-repo diff --cached --stat
 git -C dashboard/publication-repo commit -m "Atualizar dashboard OPN"
 git -C dashboard/publication-repo push
+Set-Location dashboard/publication-repo
+npx --yes vercel link --yes --project opn-meta-ads-dashboard --scope tale-34a6
+npx --yes vercel deploy --prod --yes --scope tale-34a6
 ```
 
-O script copia uma lista explícita de arquivos para um repositório separado. A importação local não faz push. Na primeira entrega, configure a hospedagem estática para servir a raiz desse repositório. Confirme no site publicado o `build_id`, hash, totais e filtros antes de considerar a atualização concluída.
+O script copia uma lista explícita de arquivos para um repositório separado. A importação local não faz push. `vercel link` foi verificado nesta entrega; `vercel deploy --prod` é o comando manual para a próxima publicação, não executado novamente após a entrega inicial. A CLI pode pedir login em outra máquina; nunca coloque credenciais no repositório. Confirme no site publicado o `build_id`, hash, totais e filtros antes de considerar a atualização concluída.
 
 ## Interpretação
 
