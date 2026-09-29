@@ -37,7 +37,7 @@ npx --yes vercel link --yes --project opn-meta-ads-dashboard --scope tale-34a6
 npx --yes vercel deploy --prod --yes --scope tale-34a6
 ```
 
-O script copia uma lista explícita de arquivos para um repositório separado. A importação local não faz push. `vercel link` foi verificado nesta entrega; `vercel deploy --prod` é o comando manual para a próxima publicação, não executado novamente após a entrega inicial. A CLI pode pedir login em outra máquina; nunca coloque credenciais no repositório. Confirme no site publicado o `build_id`, hash, totais e filtros antes de considerar a atualização concluída.
+O script copia uma lista explícita de arquivos para um repositório separado. A importação local não faz push. `vercel link` e `vercel deploy --prod` foram verificados nesta entrega; a próxima atualização continua exigindo execução manual. A CLI pode pedir login em outra máquina; nunca coloque credenciais no repositório. Confirme no site publicado o `build_id`, hash, totais e filtros antes de considerar a atualização concluída.
 
 ## Interpretação
 
