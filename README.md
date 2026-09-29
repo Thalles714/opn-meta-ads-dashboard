@@ -6,7 +6,9 @@ Painel publicado: https://opn-meta-ads-dashboard.vercel.app/ · repositório: ht
 
 ## Interface
 
-O painel oferece temas claro e escuro pelo botão no cabeçalho; a escolha é guardada apenas no navegador. A tipografia usa DM Sans para a interface e IBM Plex Sans com algarismos tabulares para valores. O gráfico mostra investimento e eventos por mês ou dia, com tabela de valores acessível abaixo. Campos ausentes aparecem como `—` e interrompem a linha do gráfico; não são convertidos em zero. Animações de entrada e interação respeitam a preferência de movimento reduzido do sistema.
+O painel oferece temas claro e escuro pelo botão no cabeçalho; a escolha é guardada apenas no navegador. A tipografia usa DM Sans para a interface e IBM Plex Sans com algarismos tabulares para valores. O gráfico mostra investimento, eventos e taxas por dia, semana ou mês. Passe o mouse, toque ou use Tab e as setas para ler data e valor exatos; há uma tabela acessível abaixo. Campos ausentes aparecem como `—` e interrompem a linha do gráfico; zero registrado permanece zero. Animações de entrada e interação respeitam a preferência de movimento reduzido do sistema.
+
+O filtro antigo “Tipo de resultado” foi removido porque o campo é ausente em grande parte do export e sua seleção descartava linhas de gasto sem aquele resultado. Os filtros de período e entidade preservam o universo correto para gasto, CPC, CPM e CTR. A comparação mostra apenas campanhas, conjuntos ou anúncios com alguma atividade no recorte; a nota informa quantos foram ocultados. O resumo destaca concentração de investimento e, quando disponível, a janela anterior de igual duração. Esses dados descrevem mídia, não comprovam retorno em reservas.
 
 A direção visual parte da identidade OPN em `assets/design_system.html`, da exploração dos componentes locais em `C:\Users\Administrator\Projects\tale\assets\templates\design-systems` e de referências de organização da informação da mLabs e OnlyGenius. Nenhum número demonstrativo dessas referências integra os dados do painel.
 
