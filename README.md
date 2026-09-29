@@ -10,6 +10,8 @@ O painel oferece temas claro e escuro pelo botão no cabeçalho; a escolha é gu
 
 A direção visual parte da identidade OPN em `assets/design_system.html`, da exploração dos componentes locais em `C:\Users\Administrator\Projects\tale\assets\templates\design-systems` e de referências de organização da informação da mLabs e OnlyGenius. Nenhum número demonstrativo dessas referências integra os dados do painel.
 
+A marca em `opn-logo.png` veio do arquivo público oficial `OPN-site-logo-principal-rodape-1024x551.png` do site opnilhabela.com.br. A foto da hero em `opn-hero.jpg` é a suíte Alecrim da OPN, copiada de `assets/opn-suite-alecrim.jpg` do projeto privado. Ambos são arquivos estáticos servidos pelo próprio painel.
+
 ## Atualização manual (PowerShell)
 
 Na raiz privada do projeto:
