@@ -1,0 +1,6 @@
+/README.md
+/dashboard/
+/.env*
+/.git/
+/.vercel/
+/.gitignore
