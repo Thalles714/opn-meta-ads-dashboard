@@ -1,6 +1,6 @@
 # OPN Guest House · dashboard Meta Ads
 
-Painel estático em português para o export histórico por anúncio/dia de 01/01 a 29/09/2026. O dataset público usa códigos estáveis derivados de IDs e não contém nomes originais, IDs brutos ou arquivos privados.
+Painel estático em português para o export histórico por anúncio/dia de 01/01 a 29/09/2026. O dataset público mantém códigos estáveis e os nomes das campanhas, conjuntos e anúncios solicitados pelo cliente; não contém IDs brutos nem arquivos privados.
 
 Painel publicado: https://opn-meta-ads-dashboard.vercel.app/ · repositório: https://github.com/Thalles714/opn-meta-ads-dashboard . Provedor escolhido: Vercel Hobby. A ligação Git da Vercel foi removida após a implantação inicial; pushes futuros não publicam automaticamente.
 
@@ -9,6 +9,8 @@ Painel publicado: https://opn-meta-ads-dashboard.vercel.app/ · repositório: ht
 O painel oferece temas claro e escuro pelo botão no cabeçalho; a escolha é guardada apenas no navegador. A tipografia usa DM Sans para a interface e IBM Plex Sans com algarismos tabulares para valores. O gráfico mostra investimento, eventos e taxas por dia, semana ou mês. Passe o mouse, toque ou use Tab e as setas para ler data e valor exatos; há uma tabela acessível abaixo. Campos ausentes aparecem como `—` e interrompem a linha do gráfico; zero registrado permanece zero. Animações de entrada e interação respeitam a preferência de movimento reduzido do sistema.
 
 O filtro antigo “Tipo de resultado” foi removido porque o campo é ausente em grande parte do export e sua seleção descartava linhas de gasto sem aquele resultado. Os filtros de período e entidade preservam o universo correto para gasto, CPC, CPM e CTR. A comparação mostra apenas campanhas, conjuntos ou anúncios com alguma atividade no recorte; a nota informa quantos foram ocultados. O resumo destaca concentração de investimento e, quando disponível, a janela anterior de igual duração. Esses dados descrevem mídia, não comprovam retorno em reservas.
+
+O resumo destaca quantidade de compras, valor de conversão de compras atribuído pela Meta, gasto em anúncios, mensagens iniciadas e CPC do link. O valor também está na evolução e na comparação. A comparação exibe nomes reais do último registro de cada ID e permite **Exportar CSV** com as métricas do recorte e nível selecionados. O CSV usa `;`, valores monetários em BRL e campos ausentes em branco. Nomes de campanhas, conjuntos e anúncios são públicos nesta versão.
 
 A direção visual parte da identidade OPN em `assets/design_system.html`, da exploração dos componentes locais em `C:\Users\Administrator\Projects\tale\assets\templates\design-systems` e de referências de organização da informação da mLabs e OnlyGenius. Nenhum número demonstrativo dessas referências integra os dados do painel.
 

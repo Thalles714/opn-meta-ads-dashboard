@@ -30,3 +30,23 @@ main{width:min(1380px,100%);padding:30px clamp(22px,3.4vw,58px) 42px;margin:0 au
 .chart-line{stroke-dasharray:1;animation:chart-draw .7s ease-out both}.kpi{animation:soft-rise .28s ease-out both}.kpi:nth-child(2){animation-delay:35ms}.kpi:nth-child(3){animation-delay:70ms}.kpi:nth-child(4){animation-delay:105ms}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 @media print{.sidebar,.topbar,.filter-box,.trend-controls,details,.text-btn{display:none!important}.app-shell{display:block}main{padding:0}.hero{box-shadow:none;min-height:0}.kpi,.chart-panel,.table-panel,.origin{box-shadow:none}section{break-inside:avoid}}
+
+/* Compras e gasto formam os dois marcos do resumo; o movimento acompanha os dados. */
+.kpi.primary:nth-child(2){background:linear-gradient(130deg,#f8e8db,#f4d6c6);border-color:#efcfbf;color:#543a32}
+.kpi.primary:nth-child(2) span,.kpi.primary:nth-child(2) small{color:#70594d}
+:root[data-theme="dark"] .kpi.primary:nth-child(2){background:linear-gradient(130deg,#63453e,#4b3933);border-color:#765b50;color:#fff6ed}
+:root[data-theme="dark"] .kpi.primary:nth-child(2) span,:root[data-theme="dark"] .kpi.primary:nth-child(2) small{color:#e9cab9}
+.export-btn{border:1px solid var(--accent);border-radius:8px;background:var(--accent);color:var(--surface);padding:9px 13px;font-size:11px;font-weight:700;white-space:nowrap;transition:transform .22s ease,box-shadow .22s ease,background .22s ease}
+.export-btn:hover{transform:translateY(-2px);box-shadow:0 9px 18px rgba(28,75,55,.16)}
+.compare{min-width:1120px}.compare td:first-child{min-width:240px;max-width:340px;white-space:normal;line-height:1.35}
+@keyframes hero-enter{from{opacity:.65;transform:scale(1.025)}to{opacity:1;transform:scale(1)}}
+@keyframes content-enter{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes value-enter{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+.hero{animation:hero-enter .9s cubic-bezier(.2,.8,.2,1) both;transition:background-position 1.2s ease,box-shadow .35s ease}
+.hero:hover{background-position:center 43%;box-shadow:0 20px 55px rgba(17,54,41,.16)}
+.hero-text>*{animation:content-enter .6s cubic-bezier(.2,.8,.2,1) both}.hero-text>*:nth-child(2){animation-delay:.12s}.hero-text>*:nth-child(3){animation-delay:.22s}.hero-text>*:nth-child(4){animation-delay:.32s}
+.filter-box,.chart-panel,.table-panel,.origin{animation:content-enter .55s cubic-bezier(.2,.8,.2,1) both}
+.kpi{animation:content-enter .5s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--card-index,0)*55ms)}.kpi strong{animation:value-enter .45s ease both;animation-delay:calc(var(--card-index,0)*55ms + 120ms)}
+.chart-area{animation:content-enter .5s ease both}.chart-point{transition:r .18s ease,fill .18s ease}.chart-panel:hover .chart-line{stroke-width:3.5}
+.compare tbody tr{transition:background .2s ease,transform .2s ease}.compare tbody tr:hover{transform:translateX(2px)}
+@media(prefers-reduced-motion:reduce){.hero,.hero-text>*,.filter-box,.chart-panel,.table-panel,.origin,.kpi,.kpi strong,.chart-area{animation:none!important}.hero:hover,.export-btn:hover,.compare tbody tr:hover{transform:none}}

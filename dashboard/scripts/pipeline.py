@@ -12,7 +12,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 PRIVATE = ROOT / 'dashboard/private'
 PUBLIC = ROOT / 'dashboard/public'
-SCHEMA = 1
+SCHEMA = 2
 FIELDS = {
     'spend': ('Valor gasto (BRL)', True),
     'impressions': ('Impressões', False),
@@ -141,11 +141,20 @@ def public_data(records, manifest):
     ids = {kind: sorted({r[kind+'_id'] for r in records}) for kind in IDS}
     prefix = {'campaign':'C','adset':'S','ad':'A'}
     codes = {kind: {raw: f'{prefix[kind]}{hashlib.sha256(raw.encode()).hexdigest()[:8].upper()}' for raw in items} for kind, items in ids.items()}
+    # Nomes são rótulos editáveis: escolha o último nome preenchido de cada ID.
+    labels = {kind: {} for kind in IDS}
+    for r in records:
+        for kind in IDS:
+            name = r[kind+'_name']
+            if name:
+                labels[kind][codes[kind][r[kind+'_id']]] = name
     public_rows = []
     for r in records:
         public_rows.append({'d': r['date'], 'c': codes['campaign'][r['campaign_id']], 's': codes['adset'][r['adset_id']], 'a': codes['ad'][r['ad_id']],
                             't': r['result_indicator'], 'at': r['attribution'], **{key: r[key] for key in FIELDS}})
-    return {'schema': SCHEMA, 'data_hash': manifest['data_hash'], 'build_id': manifest['data_hash'][:12],
+    catalog = {kind: {codes[kind][raw]: labels[kind].get(codes[kind][raw], codes[kind][raw]) for raw in ids[kind]} for kind in IDS}
+    build_id = digest({'schema': SCHEMA, 'data_hash': manifest['data_hash'], 'catalog': catalog})[:12]
+    return {'schema': SCHEMA, 'data_hash': manifest['data_hash'], 'build_id': build_id, 'catalog': catalog,
             'source_export_time': manifest['source_export_time'], 'import_time': manifest['import_time'],
             'period': manifest['period'], 'timezone': 'America/Sao_Paulo', 'rows': public_rows,
             'coverage': {'campaigns': len(ids['campaign']), 'adsets': len(ids['adset']), 'ads': len(ids['ad']),

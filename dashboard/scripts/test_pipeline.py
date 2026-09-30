@@ -1,6 +1,6 @@
 import unittest
 from datetime import date
-from pipeline import parse, number, sums, digest, merge_records
+from pipeline import parse, number, sums, digest, merge_records, public_data
 
 def row(day='2026-09-01', ad='3', spend='1,23', conversations='1'):
     return {'Início dos relatórios':day,'Encerramento dos relatórios':day,'Nome da campanha':'Campanha','Nome do conjunto de anúncios':'Conjunto','Nome do anúncio':'Anúncio',
@@ -36,5 +36,11 @@ class PipelineTest(unittest.TestCase):
     def test_mixed_results_not_summed_as_one_kpi(self):
         a=row();b=row(ad='4');b['Indicador de resultados']='profile_visit_view';b['Resultados']='8';b['Conversas por mensagem iniciadas']=''
         records,_=self.parse([a,b]);self.assertEqual(sums(records.values())['conversations'],1)
+    def test_public_catalog_uses_latest_name_without_raw_ids(self):
+        first=row();latest=row(day='2026-09-02');latest['Nome da campanha']='Campanha atual';latest['Nome do anúncio']='Anúncio atual';latest['Compras']='2';latest['Valor de conversão da compra']='123,45'
+        records,_=self.parse([first,latest]);public=public_data(list(records.values()),{'data_hash':'abc','source_export_time':None,'import_time':'2026-09-29','period':{}})
+        code=public['rows'][0]['c'];self.assertEqual(public['catalog']['campaign'][code],'Campanha atual')
+        self.assertEqual(sum(r['purchase_value'] or 0 for r in public['rows']),12345)
+        self.assertNotIn('1',public['catalog']['campaign'])
 
 if __name__=='__main__':unittest.main()

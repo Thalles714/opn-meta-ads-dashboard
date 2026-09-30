@@ -2,7 +2,7 @@ const assert=require('node:assert/strict');
 const {existsSync}=require('node:fs');
 const {join}=require('node:path');
 const local=join(__dirname,'../public/app.js');
-const {total,ratio,filterRows,groupRows,hasActivity,metricTotal,buildSeries,weekStart}=require(existsSync(local)?local:join(__dirname,'../../app.js'));
+const {total,ratio,filterRows,groupRows,hasActivity,metricTotal,buildSeries,weekStart,exportComparison}=require(existsSync(local)?local:join(__dirname,'../../app.js'));
 const rows=[
   {d:'2026-09-01',c:'C1',s:'S1',a:'A1',t:'conversation',spend:10000,impressions:1000,link_clicks:100,conversations:10,profile_visits:null,purchases:null},
   {d:'2026-09-02',c:'C1',s:'S1',a:'A1',t:'conversation',spend:100,impressions:100,link_clicks:1,conversations:0,profile_visits:null,purchases:null},
@@ -26,6 +26,11 @@ assert.ok(rows.every(r=>!('reach' in r)));
 assert.equal(metricTotal(rows,'ctr'),101/1100*100);
 assert.equal(metricTotal(rows,'cpc'),10400/101);
 assert.equal(metricTotal(rows,'cpm'),10400/1100*1000);
+const purchaseRows=[{...rows[0],purchases:2,purchase_value:12345},{...rows[1],purchases:0,purchase_value:0}];
+assert.equal(metricTotal(purchaseRows,'purchase_value'),12345);
+assert.equal(groupRows(purchaseRows,'campaign')[0].purchase_value,12345);
+assert.ok(exportComparison(purchaseRows,'campaign','2026-09-01','2026-09-02').includes('"123,45"'));
+assert.ok(exportComparison([{...rows[0],c:'=1+1'}],'campaign','2026-09-01','2026-09-01').includes('"\'=1+1"'));
 assert.equal(weekStart('2026-09-02'),'2026-08-31');
 assert.deepEqual(buildSeries(rows,'spend','day','2026-09-01','2026-09-03').map(x=>x.value),[10000,400,null]);
 assert.deepEqual(buildSeries(rows,'spend','week','2026-09-01','2026-09-03').map(x=>x.value),[10400]);

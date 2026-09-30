@@ -12,6 +12,10 @@ assert len(snapshot) == len(public['rows'])
 assert len({(r['date'],r['ad_id']) for r in snapshot}) == len(snapshot)
 assert sums(snapshot) == manifest['totals'] == sums(public['rows'])
 assert all(not any(k.endswith('_name') or k.endswith('_id') for k in r) for r in public['rows'])
+assert public['schema'] == 2
+for kind, key in (('campaign','c'),('adset','s'),('ad','a')):
+    assert set(public['catalog'][kind]) == {r[key] for r in public['rows']}
+    assert all(public['catalog'][kind].values())
 
 campaign_file = ROOT/'data/raw/meta/2026-01-01_2026-09-29_campaigns_daily.csv'
 campaign_rows, _, _ = load_csv(campaign_file)
