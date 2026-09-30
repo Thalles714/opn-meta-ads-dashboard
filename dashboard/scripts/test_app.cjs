@@ -2,7 +2,7 @@ const assert=require('node:assert/strict');
 const {existsSync}=require('node:fs');
 const {join}=require('node:path');
 const local=join(__dirname,'../public/app.js');
-const {total,ratio,filterRows,groupRows,hasActivity,metricTotal,buildSeries,weekStart,exportComparison}=require(existsSync(local)?local:join(__dirname,'../../app.js'));
+const {total,ratio,filterRows,groupRows,hasActivity,metricTotal,buildSeries,weekStart,exportComparison,chartPresentation,niceAxisTop,preferredGrain}=require(existsSync(local)?local:join(__dirname,'../../app.js'));
 const rows=[
   {d:'2026-09-01',c:'C1',s:'S1',a:'A1',t:'conversation',spend:10000,impressions:1000,link_clicks:100,conversations:10,profile_visits:null,purchases:null},
   {d:'2026-09-02',c:'C1',s:'S1',a:'A1',t:'conversation',spend:100,impressions:100,link_clicks:1,conversations:0,profile_visits:null,purchases:null},
@@ -37,6 +37,19 @@ assert.deepEqual(buildSeries(rows,'spend','week','2026-09-01','2026-09-03').map(
 assert.deepEqual(buildSeries(rows,'spend','month','2026-09-01','2026-09-03').map(x=>x.value),[10400]);
 assert.equal(buildSeries(rows,'profile_visits','day','2026-09-01','2026-09-02')[0].value,null);
 assert.equal(buildSeries(rows,'profile_visits','day','2026-09-01','2026-09-02')[1].value,5);
+const sparse=[{value:500,hasRows:true},{value:null,hasRows:true},{value:null,hasRows:true},{value:900,hasRows:true}];
+assert.deepEqual(chartPresentation(sparse,'purchase_value'),{mode:'columns',observed:[0,3],missing:2,zeros:0});
+assert.equal(chartPresentation(sparse,'purchases').mode,'columns');
+assert.equal(chartPresentation([{value:500},{value:null},{value:null},{value:null}],'spend').mode,'columns');
+assert.equal(chartPresentation([{value:100,hasRows:true},{value:200,hasRows:true}], 'spend').mode,'area');
+for(const key of ['cpc','ctr','cpm'])assert.equal(chartPresentation([{value:100,hasRows:true},{value:200,hasRows:true}],key).mode,'line');
+assert.equal(niceAxisTop(2,'purchases'),3);
+assert.equal(niceAxisTop(600000,'purchase_value'),750000);
+assert.equal(preferredGrain('purchase_value',272),'month');
+assert.equal(preferredGrain('purchases',7),'day');
+assert.equal(preferredGrain('conversations',272),'week');
+assert.equal(preferredGrain('cpc',272),'week');
+assert.equal(preferredGrain('spend',272),'day');
 assert.equal(hasActivity({spend:0,impressions:0,link_clicks:null,landing_page_views:null,conversations:null,profile_visits:null,purchases:0}),false);
 assert.equal(hasActivity({spend:100,impressions:0,link_clicks:null,landing_page_views:null,conversations:null,profile_visits:null,purchases:0}),true);
 console.log('test_app: OK');
